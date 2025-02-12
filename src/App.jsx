@@ -1,7 +1,7 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import "./App.css";
 function App() {
-  const [lenght, setlenght] = useState(8);
+  const [length, setlength] = useState(8);
   const [numberAllowd, setnumberAllowd] = useState(false);
   const [charAllowd, setcharAllowd] = useState(false);
   const [password, setpassword] = useState("");
@@ -13,13 +13,22 @@ function App() {
     if (numberAllowd) str += "0123456789";
     if (charAllowd) str += "!@#$%^&*()_+";
 
-    for (let i = 1; i < length; i++) {
-      let char = Math.floor(Math.random() * str.length + 1);
+    for (let i = 1; i <= length; i++) {
+      let char = Math.floor(Math.random() * str.length +
+       1);
+       pass += str.charAt(char);
     }
-
-    pass += str.charAt(char);
+     
     setpassword(pass);
-  }, [length, numberAllowd, charAllowd, setpassword]);
+
+  }, [length, numberAllowd, charAllowd,]);
+
+
+  useEffect(() => {
+    passwordGenerator()
+  }, [length, numberAllowd, charAllowd, passwordGenerator]);
+
+
   return (
     <div
       className="w-full max-w-md mx-auto shadow-md 
@@ -52,10 +61,10 @@ function App() {
             value={length}
             className="cursior-pointer"
             onChange={(e) => {
-              setlenght(e.target.value);
+              setlength(e.target.value);
             }}
           />
-          <label>lenght: {lenght}</label>
+          <label>length: {length}</label>
 
            {/* for the number  */}
           <div className="flex items-center gap-x-1 ">
